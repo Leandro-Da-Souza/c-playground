@@ -1,0 +1,12 @@
+# ignore everything
+*
+
+# Keep directories so git can look inside em
+!*/
+
+# add the files we want
+!*.c
+!*.h
+!Makefile
+!.gitignore
+!README.md
