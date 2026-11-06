@@ -22,13 +22,30 @@ int craftIronIngots(int *ore, int *coal) {
   return ingots;
 }
 
+int craft(int *ore, int *coal, Recipe recipe) {
+  int oreLimit = *ore / recipe.oreCost;
+  int coalLimit = *coal / recipe.coalCost;
+
+  int amount = oreLimit > coalLimit ? coalLimit : oreLimit;
+
+  *ore -= (amount * recipe.oreCost);
+  *coal -= (amount * recipe.coalCost);
+
+  return amount;
+}
+
 int main() {
   int ore = 12;
   int coal = 5;
 
-  int ingots = craftIronIngots(&ore, &coal);
+  printf("Ore before crafting: %d\n", ore);
+  printf("Coal before crafting: %d\n", coal);
+  int ingots = craft(&ore, &coal, ironIngot);
 
-  printf("%d\n", ingots);
+  printf("Total ingots crafted: %d\n", ingots);
+
+  printf("Ore after crafting: %d\n", ore);
+  printf("Coal after crafting: %d\n", coal);
 
   return 0;
 }
