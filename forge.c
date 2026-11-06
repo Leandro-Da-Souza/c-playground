@@ -1,14 +1,32 @@
 #include <stdio.h>
 
-int craftableIngots(int ore, int coal) {
-  int oreLimit = ore / 3;
-  int coalLimit = coal / 2;
+typedef struct {
+  int oreCost;
+  int coalCost;
+} Recipe;
 
-  return oreLimit > coalLimit ? coalLimit : oreLimit;
+const Recipe ironIngot = {
+    .oreCost = 3,
+    .coalCost = 2,
+};
+
+int craftIronIngots(int *ore, int *coal) {
+  int oreLimit = *ore / ironIngot.oreCost;
+  int coalLimit = *coal / ironIngot.coalCost;
+
+  int ingots = oreLimit > coalLimit ? coalLimit : oreLimit;
+
+  *ore -= (ingots * ironIngot.oreCost);
+  *coal -= (ingots * ironIngot.coalCost);
+
+  return ingots;
 }
 
 int main() {
-  int ingots = craftableIngots(12, 5);
+  int ore = 12;
+  int coal = 5;
+
+  int ingots = craftIronIngots(&ore, &coal);
 
   printf("%d\n", ingots);
 
